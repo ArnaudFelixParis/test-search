@@ -1,0 +1,44 @@
+<div class="search-page flex flex-col items-center">
+  <p-card header="Suggestions de terme" class="w-full mt-4">
+    <div class="flex justify-center">
+      <div class="mt-4 search-zone flex flex-col items-center">
+        <p-inputgroup>
+          <p-inputgroup-addon>
+            <i class="pi pi-search"></i>
+          </p-inputgroup-addon>
+          <input pInputText [formControl]="searchControl" placeholder="Search" />
+        </p-inputgroup>
+
+        @if (suggestions().length) {
+          <ul class="mt-8">
+            @for (sugg of suggestions(); track sugg.term) {
+              <li>
+                <span
+                  class="font-bold result inline-block"
+                  [innerHTML]="sugg.term | highlightSearch: query()"
+                ></span>
+                <span style="color: #787878">
+                  @if (sugg.lenDelta === 0 && sugg.diff === 0) {
+                    (Match parfait <i class="pi pi-sparkles"></i>)
+                  } @else {
+                    (écart de longueur : {{ sugg.lenDelta }} | caractères non valides :
+                    {{ sugg.diff }})
+                  }
+                </span>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    </div>
+
+    <ng-template #footer>
+      <div class="flex gap-4 mt-1">
+        <div style="color: #787878">
+          <p>Mots possibles :</p>
+          {{ allTerms | json }}
+        </div>
+      </div>
+    </ng-template>
+  </p-card>
+</div>
