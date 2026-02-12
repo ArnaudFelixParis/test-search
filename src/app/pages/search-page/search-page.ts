@@ -9,6 +9,7 @@ import { suggestTerms } from '../../core/utils/search.util';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HighlightSearchPipe } from '../../core/pipes/highlight.pipe';
 import { JsonPipe } from '@angular/common';
+import { Scored } from '../../core/models/scored.interface';
 
 @Component({
   selector: 'app-search-page',
@@ -32,7 +33,7 @@ export class SearchPage {
 
   public allTerms = ['gros', 'gras', 'graisse', 'agressif', 'go', 'ros', 'gro'];
 
-  suggestions = signal<{ term: string; diff: number; lenDelta: number }[]>([]);
+  suggestions = signal<Scored[]>([]);
 
   constructor() {
     this.searchControl.valueChanges

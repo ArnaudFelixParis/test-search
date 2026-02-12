@@ -1,3 +1,5 @@
+import { Scored } from '../models/scored.interface';
+
 export function slidingHammingDistance(query: string, candidate: string): number | null {
   const qLen = query.length;
   const cLen = candidate.length;
@@ -34,15 +36,11 @@ export function slidingHammingDistance(query: string, candidate: string): number
   return best;
 }
 
-export function suggestTerms(
-  query: string,
-  terms: string[],
-  maxResults: number,
-): { term: string; diff: number; lenDelta: number }[] {
+export function suggestTerms(query: string, terms: string[], maxResults: number): Scored[] {
   const q = query;
   const qLen = q.length;
 
-  const scored: { term: string; diff: number; lenDelta: number }[] = [];
+  const scored: Scored[] = [];
 
   for (const term of terms) {
     if (term.length < qLen) {
